@@ -14,7 +14,7 @@ private:
 
 public:
     Server();
-    int run();
+    void run();
 };
 
 

@@ -1,12 +1,8 @@
-//
-// Created by FANG on 11/11/2020.
-//
-
 #ifndef SOLUTION_THACCEPT_H
 #define SOLUTION_THACCEPT_H
+#include "Thread.h"
 
-
-class ThAccept {
+class ThAccept : public Thread {
 public:
     ThAccept();
     ~ThAccept();

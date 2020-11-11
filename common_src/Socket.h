@@ -10,9 +10,9 @@ public:
     ~Socket();
 
     Socket(const Socket&) = delete;
-    int socket_bindAndListen(const char *port);
-    int socket_connect(const char *server, const char *port);
-    int socket_accept(Socket *socket_to_accept);
+    void socket_bindAndListen(const char *port);
+    void socket_connect(const char *server, const char *port);
+    void socket_accept(Socket *socket_to_accept);
     void socket_shutdown();
 
     int socket_send(const char *buffer, unsigned int length);

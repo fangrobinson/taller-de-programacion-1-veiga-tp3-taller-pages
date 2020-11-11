@@ -13,7 +13,7 @@ Socket::~Socket() {
 }
 
 
-int Socket::socket_bindAndListen(const char *port) {
+void Socket::socket_bindAndListen(const char *port) {
     struct addrinfo hints;
     struct addrinfo *results, *rp;
 
@@ -24,7 +24,7 @@ int Socket::socket_bindAndListen(const char *port) {
 
     int status = getaddrinfo(0, port, &hints, &results);
     if (status == 1) {
-        return status;
+        throw 1;
     }
 
     int sfd;
@@ -44,7 +44,7 @@ int Socket::socket_bindAndListen(const char *port) {
 
     if (rp == NULL) {
         freeaddrinfo(results);
-        return 1;
+        throw 1;
     }
 
     this->mySocket = sfd;
@@ -53,15 +53,14 @@ int Socket::socket_bindAndListen(const char *port) {
     if (valid_listen != 0) {
         freeaddrinfo(results);
         //socket_uninit(a_socket); what to do here???
-        return 1;
+        throw 1;
     }
 
     freeaddrinfo(results);
-    return 0;
 }
 
 
-int Socket::socket_connect(const char *server, const char *port) {
+void Socket::socket_connect(const char *server, const char *port) {
     struct addrinfo hints;
     struct addrinfo *results, *rp;
 
@@ -72,7 +71,7 @@ int Socket::socket_connect(const char *server, const char *port) {
 
     int status = getaddrinfo(server, port, &hints, &results);
     if (status == 1) {
-        return 1;
+        throw 1;
     }
 
     int sfd;
@@ -92,24 +91,22 @@ int Socket::socket_connect(const char *server, const char *port) {
 
     if (rp == NULL) {
         freeaddrinfo(results);
-        return 1;
+        throw 1;
     }
 
 
     this->mySocket = sfd;
 
     freeaddrinfo(results);
-    return 0;
 }
 
 
-int Socket::socket_accept(Socket *aSocket) {
+void Socket::socket_accept(Socket *aSocket) {
     aSocket->mySocket = accept(this->mySocket, NULL, NULL);
     if (aSocket->mySocket == -1) {
         //socket_uninit(aSocket);
-        return 1;
+        throw 1;
     }
-    return 0;
 }
 
 void Socket::socket_shutdown() {
