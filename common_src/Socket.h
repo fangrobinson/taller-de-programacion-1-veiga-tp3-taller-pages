@@ -4,15 +4,15 @@
 
 class Socket {
 private:
-    int socket;
+    int mySocket;
 public:
     Socket();
     ~Socket();
-    //Socket() = delete;
+
     Socket(const Socket&) = delete;
-    int bindAndListen(const char *port);
+    int socket_bindAndListen(const char *port);
     int socket_connect(const char *server, const char *port);
-    int socket_accept(Socket socket_to_accept);
+    int socket_accept(Socket *socket_to_accept);
     void socket_shutdown();
 
     int socket_send(const char *buffer, unsigned int length);
