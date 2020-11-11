@@ -1,6 +1,7 @@
 #include "Server.h"
 #include <iostream>
 #include "../common_src/Socket.h"
+#include "ThAccept.h"
 
 // hilo principal :
 // -> lanza hilo aceptador
@@ -19,6 +20,10 @@ int Server::run() {
     std::cout << "       SERVER RUNNING" << std::endl;
     std::cout << "-----------------------------" << std::endl;
     std::cout << std::endl;
+
+    ThAccept thAccept;
+
+    thAccept.run();
 
     char c = std::cin.get();
 
