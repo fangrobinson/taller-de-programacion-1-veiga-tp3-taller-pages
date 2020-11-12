@@ -21,7 +21,10 @@ void Server::run() {
     std::cout << "-----------------------------" << std::endl;
     std::cout << std::endl;
 
-    ThAccept thAccept;
+
+    this->serverSocket.bindAndListen("8080");
+
+    ThAccept thAccept(&this->serverSocket);
 
     thAccept.start();
 
@@ -30,6 +33,8 @@ void Server::run() {
     while (c != 'q') {
         c = std::cin.get();
     }
+
+    this->serverSocket.close();
 
     thAccept.join();
 

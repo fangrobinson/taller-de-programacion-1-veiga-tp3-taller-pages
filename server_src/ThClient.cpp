@@ -1,10 +1,17 @@
-/*
+
 #include "ThClient.h"
 #include <atomic>
 
+/*
+ThClient::ThClient(Socket *peer) :keepTalking(true), isRunning(true) {
+    this->peer = peer;
+}*/
 
-ThClient::ThClient() :keepTalking(true),
-                        isRunning(true) {}
+ThClient::ThClient(Socket *peer) {
+    this->peer = peer;
+    this->keepTalking = true;
+    this->isRunning = true;
+}
 
 
 void ThClient::run() {
@@ -23,5 +30,3 @@ void ThClient::stop() {
     //peer.shutDown();
     //peer.close();
 }
-
-*/

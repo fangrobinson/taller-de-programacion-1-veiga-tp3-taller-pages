@@ -10,13 +10,14 @@ public:
     ~Socket();
 
     Socket(const Socket&) = delete;
-    void socket_bindAndListen(const char *port);
-    void socket_connect(const char *server, const char *port);
-    void socket_accept(Socket *socket_to_accept);
-    void socket_shutdown();
+    void bindAndListen(const char *port);
+    void connect(const char *server, const char *port);
+    void accept(Socket *socket_to_accept);
+    //void shutdown();
+    void close();
 
-    int socket_send(const char *buffer, unsigned int length);
-    int socket_receive(char *buffer, unsigned int length);
+    int send(const char *buffer, unsigned int length);
+    int receive(char *buffer, unsigned int length);
 };
 
 

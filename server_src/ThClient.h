@@ -1,4 +1,4 @@
-/*
+
 #ifndef SOLUTION_THCLIENT_H
 #define SOLUTION_THCLIENT_H
 
@@ -8,11 +8,11 @@
 
 class ThClient : public Thread {
 private:
-    Socket peer;
+    Socket *peer;
     std::atomic<bool> keepTalking;
     std::atomic<bool> isRunning;
 public:
-    ThClient();
+    ThClient(Socket *peer);
     ~ThClient();
     void run();
     void stop();
@@ -20,4 +20,3 @@ public:
 
 
 #endif //SOLUTION_THCLIENT_H
-*/
