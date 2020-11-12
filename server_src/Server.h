@@ -12,11 +12,12 @@ private:
     //esperarNuevosClientes ciclo accept
     //limpiarThClientZombies ciclo isDead -> .join()
     //terminarClientes
-
     Socket serverSocket;
+    char *port;
+    char *rootFile;
 
 public:
-    Server();
+    Server(int argc, char *argv[]);
     void run();
 };
 

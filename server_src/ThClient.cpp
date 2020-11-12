@@ -1,5 +1,5 @@
-
 #include "ThClient.h"
+#include "Thread.h"
 #include <atomic>
 
 /*
@@ -12,6 +12,8 @@ ThClient::ThClient(Socket *peer) {
     this->keepTalking = true;
     this->isRunning = true;
 }
+
+ThClient::~ThClient() {}
 
 
 void ThClient::run() {

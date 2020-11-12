@@ -12,8 +12,15 @@ ThAccept::~ThAccept() {}
 void ThAccept::run() {
     std::cout << "THREAD ACCEPT" << std::endl;
     //std::vector<ThClient*> clientThreads;
+
     Socket peer;
     this->socket->accept(&peer);
-    //clientThreads.push_back(new ThClient(&peer));
+
+    while (true) {
+        break;
+    }
+
+    //ThClient *newThread = new ThClient(&peer);
+    //clientThreads.push_back(newThread);
     return;
 }

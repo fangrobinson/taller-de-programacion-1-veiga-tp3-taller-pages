@@ -113,11 +113,19 @@ void Socket::connect(const char *server, const char *port) {
 
 
 void Socket::accept(Socket *aSocket) {
-    aSocket->mySocket = ::accept(this->mySocket, NULL, NULL);
-    if (aSocket->mySocket == -1) {
+    if (this->mySocket){
+        aSocket->mySocket = ::accept(this->mySocket, NULL, NULL);
+        if (aSocket->mySocket == -1) {
+            printf("Error on accepted_socket.\n");
+            throw int(1);
+        }
+    } else {
+        printf("Socket not listening\n");
         throw int(1);
     }
 }
+
+
 
 void Socket::close() {
     ::shutdown(this->mySocket, SHUT_RDWR);

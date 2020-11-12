@@ -1,4 +1,3 @@
-
 #ifndef SOLUTION_THCLIENT_H
 #define SOLUTION_THCLIENT_H
 
@@ -12,7 +11,7 @@ private:
     std::atomic<bool> keepTalking;
     std::atomic<bool> isRunning;
 public:
-    ThClient(Socket *peer);
+    ThClient(Socket * peer);
     ~ThClient();
     void run();
     void stop();

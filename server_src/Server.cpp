@@ -3,16 +3,16 @@
 #include "../common_src/Socket.h"
 #include "ThAccept.h"
 
-// hilo principal :
-// -> lanza hilo aceptador
-// c = cin.getc() while (c != q)
-// socket close
-// aceptador.join()
-
 #define OK 0
 #define ERROR 1
 
-Server::Server() {}
+Server::Server(int argc, char* argv[]) {
+    if (argc != 3) {
+        throw int(1);
+    }
+    this->port = argv[1];
+    this->rootFile = argv[2];
+}
 
 
 void Server::run() {

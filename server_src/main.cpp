@@ -3,9 +3,9 @@
 #include <iostream>
 
 int main(int argc, char* argv[]){
-    Server s;
+    Server server(argc, argv);
     try {
-        s.run();
+        server.run();
     } catch (int i) {
         //printf("EROR");
         std::cout << "ERROR" << std::endl;
