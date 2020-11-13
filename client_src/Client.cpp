@@ -1,9 +1,10 @@
 #include "Client.h"
+#include "../common_src/ArgumentsException.h"
 #include <iostream>
 
 Client::Client(int argc, char* argv[]) {
     if (argc != 3) {
-        throw int(1);
+        throw ArgumentsException("");
     }
     this->host = argv[1];
     this->port = argv[2];

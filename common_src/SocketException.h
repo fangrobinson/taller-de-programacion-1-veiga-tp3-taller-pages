@@ -1,7 +1,3 @@
-//
-// Created by FANG on 12/11/2020.
-//
-
 #ifndef SOLUTION_SOCKETEXCEPTION_H
 #define SOLUTION_SOCKETEXCEPTION_H
 

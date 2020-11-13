@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Client.h"
+#include "../common_src/ArgumentsException.h"
 
 int main(int argc, char* argv[]){
     if (argc > 1) {
@@ -9,8 +10,11 @@ int main(int argc, char* argv[]){
     Client client(argc, argv);
     try {
         client.run();
-    } catch (int i) {
-        std::cout << "ERROR" << std::endl;
+    } catch (ArgumentsException) {
+        return 1;
+    }
+    catch (...) {
+        std::cout << "UNEXPECTED ERROR" << std::endl;
     }
 
     return 0;
