@@ -1,7 +1,3 @@
-//
-// Created by FANG on 10/11/2020.
-//
-
 #ifndef SOLUTION_SERVER_H
 #define SOLUTION_SERVER_H
 
