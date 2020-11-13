@@ -50,7 +50,7 @@ void Socket::bindAndListen(const char *port) {
 
     if (rp == NULL) {
         freeaddrinfo(results);
-        throw SocketException("ERR: socket bind could bind to any hint.");
+        throw SocketException("ERR: socket bind could not bind to any hint.");
     }
 
     this->mySocket = sfd;

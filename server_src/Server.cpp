@@ -20,7 +20,6 @@ void Server::run() {
     std::cout << "-----------------------------" << std::endl;
     std::cout << "       SERVER RUNNING" << std::endl;
     std::cout << "-----------------------------" << std::endl;
-    std::cout << std::endl;
     std::cout << "PORT: " << this->port << std::endl;
     std::cout << "-----------------------------" << std::endl;
 
