@@ -12,9 +12,10 @@ private:
     std::atomic<bool> isRunning;
 public:
     ThClient(Socket * peer);
-    ~ThClient();
-    void run();
+    ~ThClient() override;
+    void run() override;
     void stop();
+    bool isDead();
 };
 
 

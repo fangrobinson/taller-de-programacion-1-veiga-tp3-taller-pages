@@ -6,6 +6,8 @@
 #include <unistd.h>
 #include <sys/socket.h>
 
+#include "SocketException.h"
+
 Socket::Socket() {
     this->mySocket = -1;
 }
@@ -27,12 +29,8 @@ void Socket::bindAndListen(const char *port) {
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
 
-    printf("%s", port);
-    port = "8088";
-
     if (getaddrinfo(0, port, &hints, &results)) {
-        printf("1");
-        throw int(1);
+        throw SocketException("ERR: socket bind could not resolve address.");
     }
 
     int sfd;
@@ -46,16 +44,13 @@ void Socket::bindAndListen(const char *port) {
         setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val));
         if (bind(sfd, rp->ai_addr, rp->ai_addrlen) == 0)
             break;
-        printf("SOCKET INV");
-        printf("%d", sfd);
         ::close(sfd);
     }
 
 
     if (rp == NULL) {
         freeaddrinfo(results);
-        printf("2");
-        throw int(1);
+        throw SocketException("ERR: socket bind could bind to any hint.");
     }
 
     this->mySocket = sfd;
@@ -63,8 +58,7 @@ void Socket::bindAndListen(const char *port) {
     int valid_listen = listen(this->mySocket, 1);
     if (valid_listen != 0) {
         freeaddrinfo(results);
-        printf("3");
-        throw int(1);
+        throw SocketException("ERROR: socket bind could not listen");
     }
 
     freeaddrinfo(results);
@@ -76,13 +70,14 @@ void Socket::connect(const char *server, const char *port) {
     struct addrinfo *results, *rp;
 
     memset(&hints, 0, sizeof hints);
+
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = 0;
 
-    int status = getaddrinfo(server, port, &hints, &results);
-    if (status == 1) {
-        throw int(1);
+    if (getaddrinfo(server, port, &hints, &results)) {
+        freeaddrinfo(results);
+        throw SocketException("ERR: socket connect could not resolve address.");
     }
 
     int sfd;
@@ -102,7 +97,7 @@ void Socket::connect(const char *server, const char *port) {
 
     if (rp == NULL) {
         freeaddrinfo(results);
-        throw int(1);
+        throw SocketException("ERR: socket connect could not connect to hint.");
     }
 
 
@@ -116,20 +111,20 @@ void Socket::accept(Socket *aSocket) {
     if (this->mySocket){
         aSocket->mySocket = ::accept(this->mySocket, NULL, NULL);
         if (aSocket->mySocket == -1) {
-            printf("Error on accepted_socket.\n");
-            throw int(1);
+            throw SocketException("ERR: socket accept could not accept");
         }
     } else {
-        printf("Socket not listening\n");
-        throw int(1);
+        throw SocketException("ERR: socket accept not listening");
     }
 }
 
 
 
 void Socket::close() {
-    ::shutdown(this->mySocket, SHUT_RDWR);
-    ::close(this->mySocket);
+    if (this->mySocket != -1) {
+        ::shutdown(this->mySocket, SHUT_RDWR);
+        ::close(this->mySocket);
+    }
 }
 
 /*

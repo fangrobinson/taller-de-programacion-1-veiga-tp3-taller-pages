@@ -20,9 +20,10 @@ void Server::run() {
     std::cout << "       SERVER RUNNING" << std::endl;
     std::cout << "-----------------------------" << std::endl;
     std::cout << std::endl;
+    std::cout << "PORT: " << this->port << std::endl;
+    std::cout << "-----------------------------" << std::endl;
 
-
-    this->serverSocket.bindAndListen("8080");
+    this->serverSocket.bindAndListen(this->port);
 
     ThAccept thAccept(&this->serverSocket);
 

@@ -15,4 +15,10 @@ void Client::run() {
     std::cout << "       CLIENT RUNNING" << std::endl;
     std::cout << "-----------------------------" << std::endl;
     std::cout << std::endl;
+
+    std::cout << this->host << std::endl;
+    std::cout << this->port << std::endl;
+
+    this->socket.connect(this->host, this->port);
+    std::cout << "CONNECTED" << std::endl;
 }
