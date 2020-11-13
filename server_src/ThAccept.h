@@ -15,6 +15,7 @@ private:
     Socket *socket;
     std::vector<ThClient*> clients;
     void reapDeadSockets();
+    void murderSockets();
 };
 
 

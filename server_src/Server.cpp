@@ -17,12 +17,6 @@ Server::Server(int argc, char* argv[]) {
 
 
 void Server::run() {
-    std::cout << "-----------------------------" << std::endl;
-    std::cout << "       SERVER RUNNING" << std::endl;
-    std::cout << "-----------------------------" << std::endl;
-    std::cout << "PORT: " << this->port << std::endl;
-    std::cout << "-----------------------------" << std::endl;
-
     this->serverSocket.bindAndListen(this->port);
 
     ThAccept thAccept(&this->serverSocket);
@@ -36,11 +30,5 @@ void Server::run() {
     }
 
     this->serverSocket.close();
-
     thAccept.join();
-
-    std::cout << "-----------------------------" << std::endl;
-    std::cout << "       SERVER CLOSING" << std::endl;
-    std::cout << "-----------------------------" << std::endl;
-    std::cout << std::endl;
 }

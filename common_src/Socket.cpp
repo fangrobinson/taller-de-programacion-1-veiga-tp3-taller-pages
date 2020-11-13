@@ -134,6 +134,11 @@ void Socket::shutdown() {
 }
 */
 
+void Socket::shutdownWrite() {
+    ::shutdown(this->mySocket, SHUT_WR);
+}
+
+
 int Socket::send(const char *buffer, unsigned int length) {
     int bytes_sent = 0;
     int socket_open = 1;

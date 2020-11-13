@@ -9,9 +9,3 @@ SocketException::SocketException(std::string errmsg) {
 std::string SocketException::strmsg() {
     return this->errmsg;
 }
-
-/*
-const std::string SocketException::what() {
-    return this->errmsg;
-}
-*/

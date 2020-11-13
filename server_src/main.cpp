@@ -17,6 +17,5 @@ int main(int argc, char* argv[]){
     catch (...) {
         std::cout << "UNEXPECTED ERROR" << std::endl;
     }
-
     return 0;
 }

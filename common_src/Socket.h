@@ -16,6 +16,8 @@ public:
     //void shutdown();
     void close();
 
+    void shutdownWrite();
+
     int send(const char *buffer, unsigned int length);
     int receive(char *buffer, unsigned int length);
 };

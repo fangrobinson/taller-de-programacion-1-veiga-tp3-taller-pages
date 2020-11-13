@@ -2,7 +2,7 @@
 #define SOLUTION_CLIENT_H
 
 #include "../common_src/Socket.h"
-
+#include <string>
 
 class Client {
 public:
@@ -14,8 +14,7 @@ private:
     Socket socket;
     char *host;
     char *port;
-
-
+    void sendLine(char *buffer, int amountRead);
 };
 
 
