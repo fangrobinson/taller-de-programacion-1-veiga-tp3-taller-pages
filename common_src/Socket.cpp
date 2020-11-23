@@ -140,7 +140,7 @@ void Socket::shutdownWrite() {
 
 
 int Socket::send(const char *buffer, unsigned int length) {
-    int bytes_sent = 0;
+    unsigned int bytes_sent = 0;
     int socket_open = 1;
 
     while (length >= bytes_sent && socket_open) {
@@ -159,7 +159,7 @@ int Socket::send(const char *buffer, unsigned int length) {
 }
 
 int Socket::receive(char *buffer, unsigned int length) {
-    int bytes_received = 0;
+    unsigned int bytes_received = 0;
     int socket_open = 1;
 
     while (length > bytes_received && socket_open == 1) {

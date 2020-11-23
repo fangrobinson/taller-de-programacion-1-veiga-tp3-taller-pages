@@ -35,7 +35,7 @@ void ThAccept::run() {
         Socket peer;
         try {
             this->socket->accept(&peer);
-        } catch (SocketException) {
+        } catch (SocketException&) {
             break;
         }
 

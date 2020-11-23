@@ -36,4 +36,6 @@ void LineParser::parseHeader(std::string *line,
     }
 }
 
-void LineParser::parseBody() {};
+void LineParser::parseBody() {
+
+}

@@ -6,7 +6,7 @@ int main(int argc, char* argv[]){
     Client client(argc, argv);
     try {
         client.run();
-    } catch (ArgumentsException) {
+    } catch (ArgumentsException&) {
         return 1;
     } catch (...) {
         std::cout << "UNEXPECTED ERROR" << std::endl;

@@ -28,7 +28,7 @@ void ThClient::run() {
                 ss.write(buffer, bytesRecibidos);
             } while (bytesRecibidos >= 0);
 
-        } catch (SocketException) {
+        } catch (SocketException&) {
             this->keepTalking = false;
             break;
         }
