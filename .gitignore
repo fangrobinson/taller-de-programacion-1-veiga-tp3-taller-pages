@@ -37,5 +37,8 @@
 # private testing
 requirements.txt
 
-#
+# makefile provided
 Makefile
+
+# concept tests
+common_src/concept_tests/
