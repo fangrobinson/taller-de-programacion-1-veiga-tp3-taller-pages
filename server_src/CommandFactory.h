@@ -3,6 +3,7 @@
 
 #include "Command.h"
 #include "ResourceManager.h"
+#include <string>
 
 class CommandFactory {
 public:

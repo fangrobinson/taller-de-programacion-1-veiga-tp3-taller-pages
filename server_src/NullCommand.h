@@ -9,7 +9,7 @@ private:
     std::string metodo;
 public:
     ~NullCommand();
-    explicit NullCommand(std::string &metodo);
+    explicit NullCommand(const std::string &metodo);
     std::string operator() () override;
 };
 

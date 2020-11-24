@@ -52,7 +52,10 @@ void ThClient::run() {
         parser.parseBody(client_input, body);
 
         CommandFactory commands;
-        Command *c = commands.getRequestCommand(metodo, resourceManager, recurso, body);
+        Command *c = commands.getRequestCommand(metodo,
+                                                resourceManager,
+                                                recurso,
+                                                body);
         std::string outStr = (*c)();
         client_output << outStr;
         delete c;

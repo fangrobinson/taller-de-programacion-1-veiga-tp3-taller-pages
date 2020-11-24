@@ -3,6 +3,8 @@
 #include "NullCommand.h"
 #include "GetCommand.h"
 #include "PostCommand.h"
+#include <string>
+#include "ResourceManager.h"
 
 
 Command * CommandFactory::getRequestCommand(std::string &metodo,
@@ -16,5 +18,4 @@ Command * CommandFactory::getRequestCommand(std::string &metodo,
         return new PostCommand(resourceManager, resource, body);
     }
     return new NullCommand(metodo);
-
 }

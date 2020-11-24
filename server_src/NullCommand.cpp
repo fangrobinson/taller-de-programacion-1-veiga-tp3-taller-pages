@@ -4,7 +4,7 @@
 
 NullCommand::~NullCommand() noexcept {}
 
-NullCommand::NullCommand(std::string &metodo) : metodo(metodo) {}
+NullCommand::NullCommand(const std::string &metodo) : metodo(metodo) {}
 
 std::string NullCommand::operator() () {
     std::stringstream out;
