@@ -5,6 +5,7 @@
 #include <sstream>
 #include "../common_src/SocketException.h"
 #include "GetCommand.h"
+#include "PostCommand.h"
 #include <string>
 
 ThClient::ThClient(Socket *peer, ResourceManager &resourceManager) :
@@ -51,18 +52,14 @@ void ThClient::run() {
         parser.parseFirstLine(firstLine, metodo, recurso, protocolo);
         parser.parseBody(client_input, body);
 
-        //"HTTP/1.1 403 FORBIDDEN\n\n" // todo CHECK BAD
-
         if (metodo == "GET") {
             GetCommand c(resourceManager, recurso);
             client_output << c();
         }
 
         if (metodo == "POST") {
-            client_output << "\n";
-            resourceManager.addResourceAt(body, recurso);
-            std::string s = resourceManager.getResourceAt(recurso);
-            client_output << s;
+            PostCommand c(resourceManager, recurso, body);
+            client_output << c();
         }
 
         peer->send(client_output.str().c_str(), client_output.str().size());
