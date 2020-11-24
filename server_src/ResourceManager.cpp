@@ -14,9 +14,14 @@ void ResourceManager::addResourceAt(std::stringstream &resourceContents, std::st
     this->resources[resourceName] = resourceContents.str().c_str();
 }
 
+void ResourceManager::addResourceAt(std::string &resourceContents, std::string resourceName) {
+    const std::lock_guard<std::mutex> lockGuard(this->m);
+    this->resources[resourceName] = resourceContents.c_str();
+}
+
 std::string ResourceManager::getResourceAt(std::string resourceName) {
     const std::lock_guard<std::mutex> lockGuard(this->m);
-    return this->resources[resourceName];
+    return std::string(this->resources[resourceName]);
 }
 
 void ResourceManager::addRoot(char *fileName) {

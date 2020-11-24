@@ -14,6 +14,7 @@ private:
 public:
     ResourceManager();
     ~ResourceManager();
+    void addResourceAt(std::string &resourceContents, std::string resourceName);
     void addResourceAt(std::stringstream &resourceContents, std::string resourceName);
     std::string getResourceAt(std::string resourceName);
     void addRoot(char *fileName);

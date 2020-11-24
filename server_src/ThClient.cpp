@@ -6,7 +6,6 @@
 #include "../common_src/SocketException.h"
 
 ThClient::ThClient(Socket *peer, ResourceManager &resourceManager) : peer(peer), resourceManager(resourceManager) {
-    //this->peer = peer;
     this->keepTalking = true;
     this->isRunning = true;
     this->start();
@@ -32,8 +31,8 @@ void ThClient::clientRequestPrint(std::string &firstLine) {
 }
 
 void ThClient::run() {
-    std::stringstream client_input, client_output, body;
-    std::string firstLine, metodo, recurso, protocolo;
+    std::stringstream client_input, client_output;
+    std::string firstLine, metodo, recurso, protocolo, body;
     while (this->keepTalking) {
         try {
             this->receiveInput(client_input);
@@ -46,28 +45,28 @@ void ThClient::run() {
         this->clientRequestPrint(firstLine);
 
         parser.parseFirstLine(firstLine, metodo, recurso, protocolo);
-        //parser.skipHeader(client_input);
-        //std::cout << metodo << recurso << protocolo;
+        parser.parseBody(client_input, body);
+
+        // std::cout << "BODY: " << body;
 
         std::string response = "HTTP/1.1 200 OK\n\n";
         //"HTTP/1.1 403 FORBIDDEN\n\n"
         client_output << response;
 
         if (metodo == "GET") {
-            std::string s = resourceManager.getResourceAt(recurso);;
+            std::string s = resourceManager.getResourceAt(recurso);
             client_output << s;
         }
 
         if (metodo == "POST") {
-            std::cout << "METODO POST" << std::endl;
+            resourceManager.addResourceAt(body, recurso);
+            std::string s = resourceManager.getResourceAt(recurso);
+            client_output << s;
         }
 
         peer->send(client_output.str().c_str(), client_output.str().size());
 
         this->keepTalking = false;
-        // ThClient should process received,
-        // call properly Request with polymorphism
-        // send response to client
     }
     this->isRunning = false;
 }

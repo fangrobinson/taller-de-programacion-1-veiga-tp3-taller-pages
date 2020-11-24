@@ -27,7 +27,7 @@ void Client::run() {
         std::string lineRead;
         std::getline(std::cin, lineRead);
         if (lineRead.size() == 0) {
-            continue;
+            lineRead = "";
         }
         lineRead += "\n";
         this->sendLine(lineRead.c_str(), lineRead.size());

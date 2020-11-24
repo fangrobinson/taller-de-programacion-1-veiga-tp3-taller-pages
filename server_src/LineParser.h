@@ -12,6 +12,7 @@ public:
                         std::string &resource,
                         std::string &protocol);
     void skipHeader(std::stringstream &inputRequest);
+    void parseBody(std::stringstream &inputRequest, std::string &body);
 };
 
 

@@ -24,10 +24,6 @@ Server::~Server() {
 void Server::run() {
     this->acceptTh->start();
 
-    std::string prueba = this->resourceManager.getResourceAt("/");
-
-    std::cout << "GET MOCKED :" << prueba << std::endl;
-
     char c = std::cin.get();
     while (c != 'q') {
         c = std::cin.get();
