@@ -34,6 +34,9 @@ void ThClient::run() {
 
         std::cout << "ThClient Received: " << ss.str() << std::endl;
 
+        std::string response = "Recibido perri";
+        peer->send(response.c_str(), response.size());
+
         this->keepTalking = false;
         // ThClient should process received,
         // call properly Request with polymorphism
