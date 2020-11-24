@@ -23,13 +23,9 @@ Server::~Server() {
 void Server::run() {
     this->acceptTh->start();
     std::string input;
-    while (input != "q") {
-        std::cin >> input;
-    }
-    /*
+
     char c = std::cin.get();
     while (c != 'q') {
         c = std::cin.get();
     }
-    */
 }

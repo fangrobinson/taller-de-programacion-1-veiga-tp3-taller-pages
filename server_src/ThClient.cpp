@@ -33,6 +33,7 @@ void ThClient::run() {
         }
 
         std::cout << "ThClient Received: " << ss.str() << std::endl;
+
         this->keepTalking = false;
         // ThClient should process received,
         // call properly Request with polymorphism

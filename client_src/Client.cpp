@@ -1,7 +1,6 @@
 #include "Client.h"
 #include "../common_src/ArgumentsException.h"
 #include "../common_src/SocketException.h"
-#include "../common_src/ProcoloException.h"
 #include <iostream>
 #include <sstream>
 
@@ -25,19 +24,22 @@ void Client::run() {
     this->socket.connect(this->host, this->port);
 
     do {
-        //printf("CLIENT RUN - READING");
         std::string lineRead;
         std::getline(std::cin, lineRead);
         if (lineRead.size() == 0) {
             continue;
         }
         this->sendLine(lineRead.c_str(), lineRead.size());
-        //int amountRead = fread(buffer, 1, 64, stdin);
-        //printf("Amount read: %d", amountRead);
-        //this->sendLine(buffer, amountRead);
     } while (!feof(stdin));
 
     this->socket.shutdownWrite();
 
-    // wait receiving server response;
+    std::stringstream ss;
+    int bytesRecibidos;
+    char buffer[64];
+    do {
+        bytesRecibidos = this->socket.receive(buffer, 64);
+        ss.write(buffer, bytesRecibidos);
+    } while (bytesRecibidos > 0);
+    std::cout << ss.str() << std::endl;
 }

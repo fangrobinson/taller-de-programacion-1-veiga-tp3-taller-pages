@@ -17,7 +17,8 @@ void ThAccept::reapDeadSockets() {
         if (this->clients[i]->isDead()) {
             this->clients[i]->stop();
             this->clients[i]->join();
-            delete this->clients[i];
+            //this->clients.erase(this->clients.begin() + i);
+            //delete this->clients[i];
         }
     }
 }
@@ -40,8 +41,8 @@ void ThAccept::run() {
         } catch (SocketException&) {
             break;
         }
-
+        //this->clients.reserve(1);
         this->clients.push_back(new ThClient(peer));
-        this->reapDeadSockets();
+        //this->reapDeadSockets();
     }
 }
