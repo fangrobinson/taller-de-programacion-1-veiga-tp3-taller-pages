@@ -7,7 +7,6 @@
 
 class Server {
 private:
-    ResourceManager resourceManager;
     Socket serverSocket;
     char *port;
     char *rootFile;

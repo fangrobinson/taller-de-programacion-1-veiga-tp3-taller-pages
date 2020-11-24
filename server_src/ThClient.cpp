@@ -49,10 +49,8 @@ void ThClient::run() {
         parser.parseFirstLine(firstLine, metodo, recurso, protocolo);
         parser.parseBody(client_input, body);
 
-        // std::cout << "BODY: " << body;
-
-        std::string response = "HTTP/1.1 200 OK\n";
-        //"HTTP/1.1 403 FORBIDDEN\n\n"
+        std::string response = "HTTP/1.1 200 OK\n"; // todo CHECK GOOD
+        //"HTTP/1.1 403 FORBIDDEN\n\n" // todo CHECK BAD
         client_output << response;
 
         if (metodo == "GET") {

@@ -12,7 +12,8 @@ private:
     std::unordered_map<std::string, std::string> resources;
     // misRecursos
 public:
-    ResourceManager();
+    explicit ResourceManager(std::string fileName);
+    ResourceManager() = delete;
     ~ResourceManager();
     void addResourceAt(std::string &resourceContents, std::string resourceName);
     void addResourceAt(std::stringstream &resourceContents,

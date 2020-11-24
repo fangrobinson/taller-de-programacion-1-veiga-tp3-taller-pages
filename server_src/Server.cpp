@@ -3,6 +3,7 @@
 #include "../common_src/Socket.h"
 #include "../common_src/ArgumentsException.h"
 #include "ThAccept.h"
+#include <string>
 
 Server::Server(int argc, char* argv[]) {
     if (argc != 3) {
@@ -10,9 +11,9 @@ Server::Server(int argc, char* argv[]) {
     }
     this->port = argv[1];
     this->rootFile = argv[2];
-    this->resourceManager.addRoot(this->rootFile);
     this->serverSocket.bindAndListen(this->port);
-    this->acceptTh = new ThAccept(this->serverSocket, this->resourceManager);
+    this->acceptTh = new ThAccept(this->serverSocket,
+                                  std::string(this->rootFile));
 }
 
 Server::~Server() {

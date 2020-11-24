@@ -5,17 +5,18 @@
 #include <vector>
 #include "ThClient.h"
 #include "ResourceManager.h"
+#include <string>
 
 class ThAccept : public Thread {
 public:
-    ThAccept(Socket &socket, ResourceManager &resourceManager);
+    ThAccept(Socket &socket, std::string rootFileName);
     ~ThAccept() override;
     void run() override;
 
 private:
     Socket &socket;
     std::vector<ThClient*> clients;
-    ResourceManager &resourceManager;
+    ResourceManager resourceManager;
     void reapDeadSockets();
     void murderSockets();
 };

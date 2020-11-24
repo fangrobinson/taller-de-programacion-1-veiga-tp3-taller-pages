@@ -1,9 +1,18 @@
 #include "ResourceManager.h"
 #include <fstream>
-#include <iostream>
 #include <string>
 
-ResourceManager::ResourceManager(){}
+ResourceManager::ResourceManager(std::string fileName){
+    std::string lineRead;
+    std::stringstream buffer;
+    std::ifstream file(fileName);
+    if ( file )
+    {
+        buffer << file.rdbuf();
+        file.close();
+    }
+    this->resources["/"] = buffer.str().c_str();
+}
 
 ResourceManager::~ResourceManager(){}
 
@@ -25,6 +34,7 @@ std::string ResourceManager::getResourceAt(std::string resourceName) {
 }
 
 void ResourceManager::addRoot(char *fileName) {
+    // todo thread safe
     // entiendo que mi interfaz expuesta al publico no es thread safe
     // en cuanto termine las funcionalidades
     // minimas del trabajo, debería corregir esto

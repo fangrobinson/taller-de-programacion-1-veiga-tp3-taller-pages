@@ -6,48 +6,48 @@
 #include "../common_src/SocketException.h"
 #include <string>
 
-ThAccept::ThAccept(Socket &socket, ResourceManager &resourceManager) :
+ThAccept::ThAccept(Socket &socket, std::string rootFileName) :
                    socket(socket),
-                   resourceManager(resourceManager){}
+                   resourceManager(rootFileName){}
 
 ThAccept::~ThAccept() {
     this->murderSockets();
 }
 
 void ThAccept::reapDeadSockets() {
-    unsigned int socketsAmount = this->clients.size();
-    for (unsigned int i = 0; i < socketsAmount; i++) {
-        if (this->clients[i]->isDead()) {
-            this->clients[i]->stop();
-            this->clients[i]->join();
-            //this->clients.erase(this->clients.begin() + i);
-            //delete this->clients[i];
+    auto it = this->clients.begin();
+
+    while (it != this->clients.end()) {
+        if ((*it)->isDead()) {
+            (*it)->join();
+            delete (*it);
+            it = this->clients.erase(it);
         }
     }
 }
 
 void ThAccept::murderSockets() {
-    unsigned int socketsAmount = this->clients.size();
-    for (unsigned int i = 0; i < socketsAmount; i++) {
-        this->clients[i]->stop();
-        this->clients[i]->join();
-        delete this->clients[i];
+    auto it = this->clients.begin();
+    while (it != this->clients.end()) {
+        (*it)->stop();
+        (*it)->join();
+        delete (*it);
+        it = this->clients.erase(it);
     }
 }
 
 void ThAccept::run() {
-    // MOVE SEMANTICS
     while (true) {
         Socket *peer;
         try {
-            peer = this->socket.accept(); // pasarle
+            peer = this->socket.accept();
         } catch(SocketException&) {
             break;
         }
 
         this->clients.push_back(new ThClient(peer, this->resourceManager));
-        // una vez que se acepta un nuevo socket se limpian los thread zombie
-        //this->reapDeadSockets();
+
+        this->reapDeadSockets();
     }
 }
 
