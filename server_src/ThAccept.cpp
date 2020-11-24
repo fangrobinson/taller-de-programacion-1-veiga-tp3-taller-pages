@@ -5,7 +5,11 @@
 #include "../common_src/Socket.h"
 #include "../common_src/SocketException.h"
 
-ThAccept::ThAccept(Socket &socket) : socket(socket) {}
+ThAccept::ThAccept(Socket &socket, ResourceManager &resourceManager) :
+                                                                        socket(socket),
+                                                                        resourceManager(resourceManager){}
+
+
 
 ThAccept::~ThAccept() {
     this->murderSockets();
@@ -41,8 +45,9 @@ void ThAccept::run() {
         } catch (SocketException&) {
             break;
         }
-        //this->clients.reserve(1);
-        this->clients.push_back(new ThClient(peer));
-        //this->reapDeadSockets();
+
+        this->clients.push_back(new ThClient(peer, this->resourceManager));
+        //this->reapDeadSockets(); // una vez que se acepta un nuevo socket se limpian los thread zombie
     }
 }
+

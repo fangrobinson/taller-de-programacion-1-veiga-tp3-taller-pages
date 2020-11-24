@@ -10,8 +10,9 @@ Server::Server(int argc, char* argv[]) {
     }
     this->port = argv[1];
     this->rootFile = argv[2];
+    this->resourceManager.addRoot(this->rootFile);
     this->serverSocket.bindAndListen(this->port);
-    this->acceptTh = new ThAccept(this->serverSocket);
+    this->acceptTh = new ThAccept(this->serverSocket, this->resourceManager);
 }
 
 Server::~Server() {
@@ -22,7 +23,10 @@ Server::~Server() {
 
 void Server::run() {
     this->acceptTh->start();
-    std::string input;
+
+    std::string prueba = this->resourceManager.getResourceAt("/");
+
+    std::cout << "GET MOCKED :" << prueba << std::endl;
 
     char c = std::cin.get();
     while (c != 'q') {

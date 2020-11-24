@@ -5,8 +5,8 @@
 #include <sstream>
 #include "../common_src/SocketException.h"
 
-ThClient::ThClient(Socket *peer) {
-    this->peer = peer;
+ThClient::ThClient(Socket *peer, ResourceManager &resourceManager) : peer(peer), resourceManager(resourceManager) {
+    //this->peer = peer;
     this->keepTalking = true;
     this->isRunning = true;
     this->start();
@@ -47,13 +47,22 @@ void ThClient::run() {
 
         parser.parseFirstLine(firstLine, metodo, recurso, protocolo);
         //parser.skipHeader(client_input);
-        std::cout << metodo << recurso << protocolo;
+        //std::cout << metodo << recurso << protocolo;
 
-        std::string response = "Recibido perri";
-
+        std::string response = "HTTP/1.1 200 OK\n\n";
+        //"HTTP/1.1 403 FORBIDDEN\n\n"
         client_output << response;
 
-        peer->send(client_output.str().c_str(), response.size());
+        if (metodo == "GET") {
+            std::string s = resourceManager.getResourceAt(recurso);;
+            client_output << s;
+        }
+
+        if (metodo == "POST") {
+            std::cout << "METODO POST" << std::endl;
+        }
+
+        peer->send(client_output.str().c_str(), client_output.str().size());
 
         this->keepTalking = false;
         // ThClient should process received,
