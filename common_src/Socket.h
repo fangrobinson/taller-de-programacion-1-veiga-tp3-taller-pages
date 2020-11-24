@@ -5,14 +5,18 @@
 class Socket {
 private:
     int mySocket;
+    void setFd(int sfd);
 public:
     Socket();
     ~Socket();
 
-    Socket(const Socket&) = delete;
+    Socket(const Socket& aSocket) = delete;
+    //Socket(const Socket&& aSocket) noexcept ;
+    Socket& operator=(const Socket&& aSocket);
+    Socket* accept();
     void bindAndListen(const char *port);
     void connect(const char *server, const char *port);
-    void accept(Socket *socket_to_accept);
+    //void accept(Socket *socket_to_accept);
     //void shutdown();
     void close();
 

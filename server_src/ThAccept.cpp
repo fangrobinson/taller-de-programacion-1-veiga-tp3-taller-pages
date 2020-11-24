@@ -5,10 +5,11 @@
 #include "../common_src/Socket.h"
 #include "../common_src/SocketException.h"
 
-ThAccept::ThAccept(Socket *socket) {
-    this->socket = socket;
+ThAccept::ThAccept(Socket &socket) : socket(socket) {}
+
+ThAccept::~ThAccept() {
+    this->murderSockets();
 }
-ThAccept::~ThAccept() {}
 
 void ThAccept::reapDeadSockets() {
     unsigned int socketsAmount = this->clients.size();
@@ -31,19 +32,16 @@ void ThAccept::murderSockets() {
 }
 
 void ThAccept::run() {
+    // MOVE SEMANTICS
     while (true) {
-        Socket peer;
+        Socket *peer;
         try {
-            this->socket->accept(&peer);
+            peer = this->socket.accept(); // pasarle
         } catch (SocketException&) {
             break;
         }
 
-        this->clients.push_back(new ThClient(&peer));
+        this->clients.push_back(new ThClient(peer));
         this->reapDeadSockets();
     }
-
-    this->murderSockets();
-
-    return;
 }

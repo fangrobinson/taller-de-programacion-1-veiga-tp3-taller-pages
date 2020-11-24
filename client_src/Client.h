@@ -14,7 +14,7 @@ private:
     Socket socket;
     char *host;
     char *port;
-    void sendLine(char *buffer, int amountRead);
+    void sendLine(const char *buffer, int amountRead);
 };
 
 

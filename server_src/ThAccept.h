@@ -7,12 +7,12 @@
 
 class ThAccept : public Thread {
 public:
-    ThAccept(Socket *socket);
+    ThAccept(Socket &socket);
     ~ThAccept() override;
     void run() override;
 
 private:
-    Socket *socket;
+    Socket &socket;
     std::vector<ThClient*> clients;
     void reapDeadSockets();
     void murderSockets();

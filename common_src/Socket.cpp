@@ -12,6 +12,26 @@ Socket::Socket() {
     this->mySocket = -1;
 }
 
+Socket &Socket::operator=(const Socket &&aSocket) {
+    this->mySocket = aSocket.mySocket;
+    return *this;
+}
+
+/*
+Socket::Socket(const Socket& aSocket) {
+    this->mySocket = aSocket.mySocket;
+}*/
+
+/*
+Socket::Socket(const Socket&& aSocket) noexcept {
+
+}
+*/
+
+
+
+
+
 Socket::~Socket() {
     if (this->mySocket != -1) {
         ::shutdown(this->mySocket, SHUT_RDWR);
@@ -106,16 +126,23 @@ void Socket::connect(const char *server, const char *port) {
     freeaddrinfo(results);
 }
 
+void Socket::setFd(int sfd) {
+    this->mySocket = sfd;
+}
 
-void Socket::accept(Socket *aSocket) {
-    if (this->mySocket){
-        aSocket->mySocket = ::accept(this->mySocket, NULL, NULL);
-        if (aSocket->mySocket == -1) {
+Socket* Socket::accept() {
+    int sfd;
+    if (this->mySocket) {
+        sfd = ::accept(this->mySocket, NULL, NULL);
+        if (sfd == -1) {
             throw SocketException("ERR: socket accept could not accept");
         }
     } else {
         throw SocketException("ERR: socket accept not listening");
     }
+    Socket *s = new Socket();
+    s->setFd(sfd);
+    return s;
 }
 
 
@@ -127,12 +154,6 @@ void Socket::close() {
     }
 }
 
-/*
-void Socket::shutdown() {
-    return;
-    //::shutdown(this->mySocket, SHUT_RDWR);
-}
-*/
 
 void Socket::shutdownWrite() {
     ::shutdown(this->mySocket, SHUT_WR);
@@ -145,7 +166,7 @@ int Socket::send(const char *buffer, unsigned int length) {
 
     while (length >= bytes_sent && socket_open) {
         int bytes_to_add = ::send(this->mySocket, (buffer + bytes_sent),
-                                length - bytes_sent, 0);
+                                length - bytes_sent, MSG_NOSIGNAL);
         if (bytes_to_add > 0){
             bytes_sent += bytes_to_add;
         } else if (bytes_to_add == 0){
@@ -161,9 +182,10 @@ int Socket::send(const char *buffer, unsigned int length) {
 int Socket::receive(char *buffer, unsigned int length) {
     unsigned int bytes_received = 0;
     int socket_open = 1;
+    int bytes_to_add = 0;
 
     while (length > bytes_received && socket_open == 1) {
-        int bytes_to_add = ::recv(this->mySocket, &buffer[bytes_received],
+        bytes_to_add = ::recv(this->mySocket, &buffer[bytes_received],
                                 length - bytes_received, 0);
 
         if (bytes_to_add > 0){
@@ -172,5 +194,6 @@ int Socket::receive(char *buffer, unsigned int length) {
             socket_open = bytes_to_add;
         }
     }
+
     return bytes_received;
 }

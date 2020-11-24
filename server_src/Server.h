@@ -2,18 +2,18 @@
 #define SOLUTION_SERVER_H
 
 #include "../common_src/Socket.h"
+#include "ThAccept.h"
 
 class Server {
 private:
-    //esperarNuevosClientes ciclo accept
-    //limpiarThClientZombies ciclo isDead -> .join()
-    //terminarClientes
     Socket serverSocket;
     char *port;
     char *rootFile;
+    ThAccept *acceptTh;
 
 public:
     Server(int argc, char *argv[]);
+    ~Server();
     void run();
 };
 

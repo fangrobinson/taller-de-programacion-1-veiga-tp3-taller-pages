@@ -13,8 +13,7 @@ int main(int argc, char* argv[]){
     } catch (SocketException& e) {
         std::cout << e.strmsg() << std::endl;
         return 1;
-    }
-    catch (...) {
+    } catch (...) {
         std::cout << "UNEXPECTED ERROR" << std::endl;
     }
     return 0;

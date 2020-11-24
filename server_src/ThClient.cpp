@@ -12,30 +12,28 @@ ThClient::ThClient(Socket *peer) {
     this->start();
 }
 
-ThClient::~ThClient() {}
-
+ThClient::~ThClient() {
+    delete peer;
+}
 
 void ThClient::run() {
+    unsigned int size = 64;
+    char buffer[64];
+    int bytesRecibidos;
+    std::stringstream ss;
     while (this->keepTalking) {
-        unsigned int size = 64;
-        char buffer[64];
-        int bytesRecibidos;
-
-        std::stringstream ss;
         try {
             do {
                 bytesRecibidos = peer->receive(buffer, size);
                 ss.write(buffer, bytesRecibidos);
-            } while (bytesRecibidos >= 0);
-
+            } while (bytesRecibidos > 0);
         } catch (SocketException&) {
             this->keepTalking = false;
             break;
         }
-        std::string s = buffer;
 
-        std::cout << "ThClient Received: " << s << std::endl;
-
+        std::cout << "ThClient Received: " << ss.str() << std::endl;
+        this->keepTalking = false;
         // ThClient should process received,
         // call properly Request with polymorphism
         // send response to client

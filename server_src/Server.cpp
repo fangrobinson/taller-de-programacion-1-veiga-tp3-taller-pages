@@ -4,31 +4,32 @@
 #include "../common_src/ArgumentsException.h"
 #include "ThAccept.h"
 
-#define OK 0
-#define ERROR 1
-
 Server::Server(int argc, char* argv[]) {
     if (argc != 3) {
         throw ArgumentsException("");
     }
     this->port = argv[1];
     this->rootFile = argv[2];
+    this->serverSocket.bindAndListen(this->port);
+    this->acceptTh = new ThAccept(this->serverSocket);
 }
 
+Server::~Server() {
+    this->serverSocket.close();
+    this->acceptTh->join();
+    delete this->acceptTh;
+}
 
 void Server::run() {
-    this->serverSocket.bindAndListen(this->port);
-
-    ThAccept thAccept(&this->serverSocket);
-
-    thAccept.start();
-
+    this->acceptTh->start();
+    std::string input;
+    while (input != "q") {
+        std::cin >> input;
+    }
+    /*
     char c = std::cin.get();
-
     while (c != 'q') {
         c = std::cin.get();
     }
-
-    this->serverSocket.close();
-    thAccept.join();
+    */
 }
