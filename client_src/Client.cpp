@@ -29,6 +29,7 @@ void Client::run() {
         if (lineRead.size() == 0) {
             continue;
         }
+        lineRead += "\n";
         this->sendLine(lineRead.c_str(), lineRead.size());
     } while (!feof(stdin));
 

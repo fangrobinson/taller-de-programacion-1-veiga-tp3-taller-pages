@@ -16,26 +16,44 @@ ThClient::~ThClient() {
     delete peer;
 }
 
-void ThClient::run() {
+void ThClient::receiveInput(std::stringstream &input) {
     unsigned int size = 64;
     char buffer[64];
     int bytesRecibidos;
-    std::stringstream ss;
+    do {
+            bytesRecibidos = peer->receive(buffer, size);
+            input.write(buffer, bytesRecibidos);
+    } while (bytesRecibidos > 0);
+}
+
+void ThClient::clientRequestPrint(std::string &firstLine) {
+    firstLine += "\n";
+    std::cout << firstLine; // STDOUT SERVIDOR POR CONSULTA
+}
+
+void ThClient::run() {
+    std::stringstream client_input, client_output, body;
+    std::string firstLine, metodo, recurso, protocolo;
     while (this->keepTalking) {
         try {
-            do {
-                bytesRecibidos = peer->receive(buffer, size);
-                ss.write(buffer, bytesRecibidos);
-            } while (bytesRecibidos > 0);
+            this->receiveInput(client_input);
         } catch (SocketException&) {
             this->keepTalking = false;
             break;
         }
 
-        std::cout << "ThClient Received: " << ss.str() << std::endl;
+        std::getline(client_input, firstLine, '\n');
+        this->clientRequestPrint(firstLine);
+
+        parser.parseFirstLine(firstLine, metodo, recurso, protocolo);
+        //parser.skipHeader(client_input);
+        std::cout << metodo << recurso << protocolo;
 
         std::string response = "Recibido perri";
-        peer->send(response.c_str(), response.size());
+
+        client_output << response;
+
+        peer->send(client_output.str().c_str(), response.size());
 
         this->keepTalking = false;
         // ThClient should process received,
