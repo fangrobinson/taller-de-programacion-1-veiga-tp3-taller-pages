@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 
+PostCommand::~PostCommand() {}
 
 PostCommand::PostCommand(ResourceManager &resourceManager,
                          std::string &resource,
@@ -13,7 +14,7 @@ PostCommand::PostCommand(ResourceManager &resourceManager,
 
 std::string PostCommand::operator() () {
     if (this->resource == "/") {
-        return "HTTP/1.1 403 FORBIDDEN\n\n”";
+        return "HTTP/1.1 403 FORBIDDEN\n\n\n”";
     }
 
     resourceManager.addResourceAt(this->body,

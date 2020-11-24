@@ -3,8 +3,10 @@
 #include <string>
 #include <sstream>
 
+GetCommand::~GetCommand() noexcept {}
 
-GetCommand::GetCommand(ResourceManager &resourceManager, std::string &resource) :
+GetCommand::GetCommand(ResourceManager &resourceManager,
+                       std::string &resource) :
                     resourceManager(resourceManager),
                     resource(resource) {}
 

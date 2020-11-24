@@ -4,9 +4,9 @@
 #include <iostream>
 #include <sstream>
 #include "../common_src/SocketException.h"
-#include "GetCommand.h"
-#include "PostCommand.h"
 #include <string>
+#include "CommandFactory.h"
+#include "Command.h"
 
 ThClient::ThClient(Socket *peer, ResourceManager &resourceManager) :
                     peer(peer), resourceManager(resourceManager) {
@@ -30,7 +30,6 @@ void ThClient::receiveInput(std::stringstream &input) {
 }
 
 void ThClient::clientRequestPrint(std::string &firstLine) {
-    // STDOUT SERVIDOR POR CONSULTA
     firstLine += "\n";
     std::cout << firstLine;
 }
@@ -52,16 +51,11 @@ void ThClient::run() {
         parser.parseFirstLine(firstLine, metodo, recurso, protocolo);
         parser.parseBody(client_input, body);
 
-        if (metodo == "GET") {
-            GetCommand c(resourceManager, recurso);
-            client_output << c();
-        }
-
-        if (metodo == "POST") {
-            PostCommand c(resourceManager, recurso, body);
-            client_output << c();
-        }
-
+        CommandFactory commands;
+        Command *c = commands.getRequestCommand(metodo, resourceManager, recurso, body);
+        std::string outStr = (*c)();
+        client_output << outStr;
+        delete c;
         peer->send(client_output.str().c_str(), client_output.str().size());
 
         this->keepTalking = false;

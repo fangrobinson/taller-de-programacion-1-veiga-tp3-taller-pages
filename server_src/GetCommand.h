@@ -3,14 +3,16 @@
 
 #include <string>
 #include "ResourceManager.h"
+#include "Command.h"
 
-class GetCommand {
+class GetCommand : public Command{
 private:
     ResourceManager &resourceManager;
     std::string &resource;
 public:
+    ~GetCommand();
     GetCommand(ResourceManager &resourceManager, std::string &resource);
-    std::string operator() ();
+    std::string operator() () override;
 };
 
 #endif //TP3_GETCOMMAND_H

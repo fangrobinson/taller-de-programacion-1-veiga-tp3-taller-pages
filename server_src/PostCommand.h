@@ -3,17 +3,19 @@
 
 #include "ResourceManager.h"
 #include <string>
+#include "Command.h"
 
-class PostCommand {
+class PostCommand : public Command {
 private:
     ResourceManager &resourceManager;
     std::string &resource;
     std::string &body;
 public:
+    ~PostCommand();
     PostCommand(ResourceManager &resourceManager,
                 std::string &resource,
                 std::string &body);
-    std::string operator() ();
+    std::string operator() () override;
 };
 
 #endif //TP3_POSTCOMMAND_H
