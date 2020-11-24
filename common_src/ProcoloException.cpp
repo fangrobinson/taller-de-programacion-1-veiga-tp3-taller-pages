@@ -3,7 +3,7 @@
 #include <string>
 #include <exception>
 
-ProcoloException::ProcoloException(std::string errmsg) {
+ProcoloException::ProcoloException(const std::string &errmsg) {
     this->errmsg = errmsg;
 }
 

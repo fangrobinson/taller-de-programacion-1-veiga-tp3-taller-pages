@@ -2,6 +2,6 @@
 #include <string>
 #include <exception>
 
-ArgumentsException::ArgumentsException(std::string errmsg) {
+ArgumentsException::ArgumentsException(const std::string &errmsg) {
     this->errmsg = errmsg;
 }

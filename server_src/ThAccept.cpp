@@ -6,7 +6,7 @@
 #include "../common_src/SocketException.h"
 #include <string>
 
-ThAccept::ThAccept(Socket &socket, std::string rootFileName) :
+ThAccept::ThAccept(Socket &socket, const std::string &rootFileName) :
                    socket(socket),
                    resourceManager(rootFileName){}
 

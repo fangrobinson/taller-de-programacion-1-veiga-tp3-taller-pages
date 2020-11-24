@@ -2,7 +2,7 @@
 #include <string>
 #include <exception>
 
-SocketException::SocketException(std::string errmsg) {
+SocketException::SocketException(const std::string &errmsg) {
     this->errmsg = errmsg;
 }
 

@@ -17,21 +17,6 @@ Socket &Socket::operator=(const Socket &&aSocket) {
     return *this;
 }
 
-/*
-Socket::Socket(const Socket& aSocket) {
-    this->mySocket = aSocket.mySocket;
-}*/
-
-/*
-Socket::Socket(const Socket&& aSocket) noexcept {
-
-}
-*/
-
-
-
-
-
 Socket::~Socket() {
     if (this->mySocket != -1) {
         ::shutdown(this->mySocket, SHUT_RDWR);
@@ -182,10 +167,9 @@ int Socket::send(const char *buffer, unsigned int length) {
 int Socket::receive(char *buffer, unsigned int length) {
     unsigned int bytes_received = 0;
     int socket_open = 1;
-    int bytes_to_add = 0;
 
     while (length > bytes_received && socket_open == 1) {
-        bytes_to_add = ::recv(this->mySocket, &buffer[bytes_received],
+        int bytes_to_add = ::recv(this->mySocket, &buffer[bytes_received],
                                 length - bytes_received, 0);
 
         if (bytes_to_add > 0){

@@ -6,7 +6,7 @@
 
 class ProcoloException : public std::exception {
 public:
-    explicit ProcoloException(std::string errmsg);
+    explicit ProcoloException(const std::string &errmsg);
     std::string strmsg();
 
 private:

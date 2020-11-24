@@ -10,7 +10,7 @@ class ResourceManager {
 private:
     std::mutex m;
     std::unordered_map<std::string, std::string> resources;
-    // misRecursos
+    
 public:
     explicit ResourceManager(std::string fileName);
     ResourceManager() = delete;
@@ -19,7 +19,6 @@ public:
     void addResourceAt(std::stringstream &resourceContents,
                        std::string resourceName);
     std::string getResourceAt(std::string resourceName);
-    void addRoot(char *fileName);
 };
 
 

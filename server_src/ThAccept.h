@@ -9,7 +9,7 @@
 
 class ThAccept : public Thread {
 public:
-    ThAccept(Socket &socket, std::string rootFileName);
+    ThAccept(Socket &socket, const std::string &rootFileName);
     ~ThAccept() override;
     void run() override;
 

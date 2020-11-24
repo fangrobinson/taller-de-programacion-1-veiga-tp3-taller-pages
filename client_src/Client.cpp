@@ -36,7 +36,6 @@ void Client::run() {
 
     this->socket.shutdownWrite();
 
-    std::stringstream ss;
     int bytesRecibidos;
     char buffer[64];
     do {

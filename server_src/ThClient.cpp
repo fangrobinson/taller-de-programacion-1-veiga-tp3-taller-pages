@@ -28,8 +28,9 @@ void ThClient::receiveInput(std::stringstream &input) {
 }
 
 void ThClient::clientRequestPrint(std::string &firstLine) {
+    // STDOUT SERVIDOR POR CONSULTA
     firstLine += "\n";
-    std::cout << firstLine; // STDOUT SERVIDOR POR CONSULTA
+    std::cout << firstLine;
 }
 
 void ThClient::run() {
