@@ -29,5 +29,9 @@ void ResourceManager::addResourceAt(std::string &resourceContents,
 
 std::string ResourceManager::getResourceAt(std::string resourceName) {
     const std::lock_guard<std::mutex> lockGuard(this->m);
+    auto got = this->resources.find(resourceName);
+    if (got == this->resources.end()) {
+        return std::string("");
+    }
     return std::string(this->resources[resourceName]);
 }
