@@ -7,7 +7,7 @@
 
 class ArgumentsException : public std::exception {
 public:
-    ArgumentsException(std::string errmsg);
+    explicit ArgumentsException(std::string errmsg);
 
 private:
     std::string errmsg;

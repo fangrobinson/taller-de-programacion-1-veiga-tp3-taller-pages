@@ -5,12 +5,12 @@
 #include <string>
 
 class ProcoloException : public std::exception {
-    public:
-        ProcoloException(std::string errmsg);
-        std::string strmsg();
+public:
+    explicit ProcoloException(std::string errmsg);
+    std::string strmsg();
 
-    private:
-        std::string errmsg;
+private:
+    std::string errmsg;
 };
 
 #endif //SOLUTION_PROCOLOEXCEPTION_H

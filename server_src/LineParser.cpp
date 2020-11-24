@@ -23,7 +23,6 @@ void LineParser::skipHeader(std::stringstream &inputRequest) {
 }
 
 void LineParser::parseBody(std::stringstream &inputRequest, std::string &body) {
-
     std::string aLine;
     std::stringstream out;
     while (std::getline(inputRequest, aLine) && !aLine.empty()){

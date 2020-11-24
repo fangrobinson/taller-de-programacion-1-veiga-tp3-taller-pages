@@ -4,8 +4,10 @@
 #include <iostream>
 #include <sstream>
 #include "../common_src/SocketException.h"
+#include <string>
 
-ThClient::ThClient(Socket *peer, ResourceManager &resourceManager) : peer(peer), resourceManager(resourceManager) {
+ThClient::ThClient(Socket *peer, ResourceManager &resourceManager) :
+                    peer(peer), resourceManager(resourceManager) {
     this->keepTalking = true;
     this->isRunning = true;
     this->start();
@@ -36,7 +38,7 @@ void ThClient::run() {
     while (this->keepTalking) {
         try {
             this->receiveInput(client_input);
-        } catch (SocketException&) {
+        } catch(SocketException&) {
             this->keepTalking = false;
             break;
         }
@@ -49,11 +51,12 @@ void ThClient::run() {
 
         // std::cout << "BODY: " << body;
 
-        std::string response = "HTTP/1.1 200 OK\n\n";
+        std::string response = "HTTP/1.1 200 OK\n";
         //"HTTP/1.1 403 FORBIDDEN\n\n"
         client_output << response;
 
         if (metodo == "GET") {
+            client_output << "Content-Type: text/html\n\n";
             std::string s = resourceManager.getResourceAt(recurso);
             client_output << s;
         }

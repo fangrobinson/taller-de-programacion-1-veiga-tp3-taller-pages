@@ -6,7 +6,7 @@
 
 class SocketException : public std::exception {
 public:
-    SocketException(std::string errmsg);
+    explicit SocketException(std::string errmsg);
     std::string strmsg();
 
 private:

@@ -6,6 +6,7 @@
 #include "../common_src/Socket.h"
 #include "LineParser.h"
 #include "ResourceManager.h"
+#include <string>
 
 class ThClient : public Thread {
 private:

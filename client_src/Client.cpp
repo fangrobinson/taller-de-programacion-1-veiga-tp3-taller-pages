@@ -3,6 +3,7 @@
 #include "../common_src/SocketException.h"
 #include <iostream>
 #include <sstream>
+#include <string>
 
 Client::Client(int argc, char* argv[]) {
     if (argc != 3) {
@@ -40,7 +41,7 @@ void Client::run() {
     char buffer[64];
     do {
         bytesRecibidos = this->socket.receive(buffer, 64);
-        ss.write(buffer, bytesRecibidos);
+        std::string outBuffer(buffer, bytesRecibidos);
+        std::cout << outBuffer;
     } while (bytesRecibidos > 0);
-    std::cout << ss.str() << std::endl;
 }
