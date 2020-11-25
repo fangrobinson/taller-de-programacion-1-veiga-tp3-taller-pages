@@ -30,6 +30,10 @@ El cliente deberá devolver siempre 0.
 
 ### Entidades que modelan la solución del trabajo práctico
 
+La solucióin fue confeccionada siguiendo el siguiente modelo:
+
+![Diagrama de clases](img/Fang_Taller_Pages.jpg)
+
 #### Client
 
 Modela el comportamiento necesario para un usuario que quiere realizar consultas u operaciones sobre un servidor HTTP que soporta los comandos GET y POST. Se leen de entrada estándar tanto los métodos como los contenidos de estos petitorios.

@@ -12,15 +12,9 @@ Server::Server(int argc, char* argv[]) {
     this->port = argv[1];
     this->rootFile = argv[2];
     this->serverSocket.bindAndListen(this->port);
-    //this->acceptTh = new ThAccept(this->serverSocket,
-    //                              std::string(this->rootFile));
 }
 
-Server::~Server() {
-    //this->serverSocket.close();
-    //this->acceptTh->join();
-    //delete this->acceptTh;
-}
+Server::~Server() {}
 
 void Server::run() {
     ThAccept thAccept(this->serverSocket, std::string(this->rootFile));
