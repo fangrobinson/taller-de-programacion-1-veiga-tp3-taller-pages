@@ -28,6 +28,82 @@ El servidor devolverá 0 si su ejecución fue exitosa. Si la cantidad de para�
 
 El cliente deberá devolver siempre 0.
 
+### Historias de usuario y Criterios de Aceptación
+
+Se detallan algunos escenarios importantes en la resolución del trabajo práctico. En particular las respuestas esperadas por las operaciones de cliente y servidor, como así también el comportamiento que debe resolver de forma concurrente a la hora de agregar o consulta recursos. 
+
+Client-US-1: Como cliente quiero poder pedir un recurso de un servidor para ver su contenido.
+
+Client-US-1-CA1: 
+Escenario Pido un recurso válido. 
+Dado que pido a un servidor un recurso válido. 
+Cuando el servidor tiene dicho recurso. 
+Entonces obtengo el recurso y se me notifica.
+
+Client-US-1-CA2: 
+Escenario Pido un recurso válido, pero no disponible. 
+Dado que pido a un servidor un recurso válido. 
+Cuando el servidor no tiene dicho recurso. 
+Entonces no obtengo el recurso.
+
+Client-US-2: Como cliente quiero poder subir un recurso a un servidor para que esté disponible en el mismo.
+
+Client-US-2-CA1: 
+Escenario Subo un recurso válido en directorio válido. 
+Dado que subo a un servidor un recurso válido en un directorio válido. 
+Cuando el servidor permite subir un recurso en el directorio indicado.
+Entonces subo el recurso al servidor y se me notifica.
+
+Client-US-2-CA2: 
+Escenario Subo un recurso válido, pero el directorio raíz. 
+Dado que subo a un servidor un recurso válido en el directorio raíz. 
+Cuando el servidor no permite subir un recurso en el directorio raíz.
+Entonces no subo el recurso al servidor y obtengo un mensaje de error..
+
+Server-US-1: Como servidor quiero aceptar petitorios GET en protocolo HTTP para disponibilizar mis recursos a mis usuarios.
+
+Server-US-1-CA1: 
+Escenario Recibo un petitorio GET con recurso válido.
+Dado que recibo un petitorio GET.
+Cuando el recurso está disponible.
+Entonces el recurso pedido y notifico que se ha pedido ese recurso.
+
+Server-US-1-CA2: 
+Escenario Recibo un petitorio GET con recurso inválido.
+Dado que recibo un petitorio GET.
+Cuando el recurso no está disponible.
+Entonces no entrego el recurso pedido.
+
+Server-US-2: Como servidor quiero aceptar petitorios POST en protocolo HTTP para obtener recursos de mis usuarios.
+
+Server-US-2-CA1: 
+Escenario Recibo un petitorio POST con directorio válido.
+Dado que recibo un petitorio POST.
+Cuando el directorio permite escritura.
+Entonces actualizo el recurso pedido y notifico que se ha subido ese recurso.
+
+Server-US-2-CA2: 
+Escenario Recibo un petitorio POST con directorio inválido.
+Dado que recibo un petitorio POST.
+Cuando el directorio no permite escritura.
+Entonces actualizo no el recurso pedido y notifico que el directroio no permite ser escrito.
+
+ResourceManager-US-1: Como Manager de Recursos quiero poder agregar un recurso para permitir consultas sobre él.
+
+ResourceManager-US-1-CA1: 
+Escenario Agregar un recurso y estoy bloqueado
+Dado que agrego un recurso
+Cuando se está realizando otra operación
+Entonces espero a que termine la operación anterior y actualizo el recurso pedido.
+
+ResourceManager-US-2: Como Manager de Recursos quiero poder entregar un recurso consultado para disponibilizarlos a mis usuarios.
+
+ResourceManager-US-1-CA1: 
+Escenario Consultar un recurso y estoy bloqueado
+Dado que consulto un recurso
+Cuando se está realizando otra operación
+Entonces espero a que termine la operación anterior y respondo la consulta.
+
 ### Entidades que modelan la solución del trabajo práctico
 
 La solucióin fue confeccionada siguiendo el siguiente modelo:
@@ -60,7 +136,7 @@ Encapsula las tareas de parseo de contenidos de los petitorios HTTP. Que se asum
 
 #### Resource Manager
 
-Núclea la responsabilidad de modelar los recursos sobre los cuales se consultarán para responder petitorios de los clientes. 
+Es una entidad compartida que núclea la responsabilidad de modelar los recursos sobre los cuales se consultarán para responder petitorios de los clientes. Permite agregar recursos o consultar recursos de manera thread-safe.
 
 #### Server
 
