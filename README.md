@@ -32,7 +32,7 @@ El cliente deberá devolver siempre 0.
 
 La solucióin fue confeccionada siguiendo el siguiente modelo:
 
-![Diagrama de clases](img/Fang_Taller_Pages.jpg)
+![Diagrama de clases](img/FANG_Taller_Pages.jpg)
 
 #### Client
 
